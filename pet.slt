@@ -1,0 +1,27 @@
+{
+    "job_class": "PipelineJob",
+    "job_name": "pet",
+    "note": "",
+    "parameters": {
+        "enabled": true,
+        "execution_timeout": null,
+        "include_external_urls": true,
+        "job_alias": null,
+        "job_type": "standard",
+        "llfeed_token": "290yBDxxzp8Bwzw3bGTMvGtmNr3wb0cL",
+        "max_failures": 10,
+        "max_in_flight": 200,
+        "notification": {
+            "recipients": null
+        },
+        "pipeline_parameters": {
+            "PATH_INFO": "/12345",
+            "REQUEST_METHOD": "GET"
+        },
+        "pipeline_path": "petPipeline",
+        "snaplex_path": "sidekick"
+    },
+    "schedule": {},
+    "trigger": {},
+    "trigger_type": "ScheduleTrigger"
+}
