@@ -1,0 +1,26 @@
+{
+    "job_class": "PipelineJob",
+    "job_name": "images",
+    "note": "",
+    "parameters": {
+        "enabled": true,
+        "execution_timeout": null,
+        "include_external_urls": true,
+        "job_alias": null,
+        "job_type": "standard",
+        "llfeed_token": "ieZbbUWt9RVVa6gAFQXKeItdkIP0wSwO",
+        "max_failures": 10,
+        "max_in_flight": 200,
+        "notification": {
+            "recipients": null
+        },
+        "pipeline_parameters": {
+            "PATH_INFO": null
+        },
+        "pipeline_path": "imagesPipeline",
+        "snaplex_path": "sidekick"
+    },
+    "schedule": {},
+    "trigger": {},
+    "trigger_type": "ScheduleTrigger"
+}

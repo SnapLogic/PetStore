@@ -1,10 +1,11 @@
 {
-	request: match [pipe.args.get('REQUEST_METHOD'), pipe.args.get('PATH_INFO', '').replace("/", "")] {
-		["GET", pet_id] => { op: "findPet", id: pet_id },
-		["POST", ""] => { op: "createPet"},
-		["POST", pet_id] => { op: "updatePetForm", id: pet_id},
-		["PUT", pet_id] => { op: "updatePet", id: pet_id},
-		["DELETE", pet_id] => { op: "deletePet", id: pet_id},
+	request: match [pipe.args.get('REQUEST_METHOD'), pipe.args.get('PATH_INFO', '').split("/")] {
+		["GET", [pet_id]] => { op: "findPet", id: pet_id },
+		["POST", [""]] => { op: "createPet" },
+		["POST", [pet_id]] => { op: "updatePetForm", id: pet_id },
+		["POST", [pet_id, "uploadImage"]] => { op: "uploadImage", id: pet_id },
+		["PUT", [pet_id]] => { op: "updatePet", id: pet_id },
+		["DELETE", [pet_id]] => { op: "deletePet", id: pet_id },
 		_ => {op: null, id: -1}
 	},
 	idToPath: (id=this.request.id) => 'plexfs:/pets/pet%s.json'.sprintf(id)

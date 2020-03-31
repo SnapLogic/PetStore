@@ -1,0 +1,29 @@
+{
+    matchToken: text => match text {
+        /^$/ => ['eof', '', ''],
+        /^;(?<rest>.*)/ => ['sep', '', rest],
+        /^=(?<rest>.*)/ => ['eq', '', rest],
+        /^(?<ws>\s+)(?<rest>.*)/ => ['ws', ws, rest],
+        /^(?<token>[^\(\)<>@,;:\\"\/\[\]\?=\{\}\s]+)(?<rest>.*)/ => ['token', token, rest],
+        /^\((?<comment>[^\(\)]+)\)(?<rest>.*)/ => ['comment', comment, rest],
+        /^"(?<qstring>[^"]+)"(?<rest>.*)/ => ['qstring', qstring.replaceAll('\\', ''), rest],
+    },
+    tokenize: (text, tokens=[]) => match this.matchToken(text) {
+        ['eof', ...] => tokens,
+        ['ws', _, rest] => this.tokenize(rest, tokens),
+        [type, '', rest] => this.tokenize(rest, [...tokens, type]),
+        [type, value, rest] => this.tokenize(rest, [...tokens, { [type]: value }]),
+        _ => tokens
+    },
+    tokensToObject: (tokens, defaultName, obj={}) => match tokens {
+        [{token: key}, 'eq', {token: value}, ...rest] =>
+            this.tokensToObject(rest, defaultName, obj).extend({ [key]: value }),
+        [{token: key}, 'eq', {qstring: value}, ...rest] =>
+            this.tokensToObject(rest, defaultName, obj).extend({ [key]: value }),
+        [{token: value}, ...rest] =>
+            this.tokensToObject(rest, defaultName, obj).extend({ [defaultName]: value }),
+        ['sep', ...rest] => this.tokensToObject(rest, defaultName, obj),
+        _ => obj
+    },
+    parseHeader: (text, defaultName='value') => this.tokensToObject(this.tokenize(text), defaultName)
+}
