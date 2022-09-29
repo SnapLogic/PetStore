@@ -15,7 +15,8 @@
             "recipients": null
         },
         "pipeline_parameters": {
-            "PATH_INFO": "/12345",
+            "CONTENT_TYPE": null,
+            "PATH_INFO": "/123456",
             "REQUEST_METHOD": "GET"
         },
         "pipeline_path": "petPipeline",
